@@ -2,7 +2,7 @@
 $quizs = [
     0 => [
         "Title" => "Connaissances générales",
-        "Picture" => "0.png",
+        "Picture" => "0.jpg",
         "Author" => "Cédric",
         "Questions" => [
             0 => "Jusqu’en 1923, comment s’appelait la ville turque d’Istanbul ?",
@@ -52,3 +52,4 @@ $quizs = [
         ]
     ],
 ];
+

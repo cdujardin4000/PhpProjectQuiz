@@ -1,6 +1,11 @@
 <?php
+    include 'filterQuizs.php';
     include 'quizs.php';
-    include 'view.php';
+    if (isset($_POST['query']) && !empty($_POST['query'])){
+        $quizs = filterQuizs($_POST['query']);
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,28 +41,30 @@
 
                     </ul>
 
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" class="form-control form-control-dark" placeholder="Rechercher un quiz" aria-label="Search">
-
+                    <form class="search-quiz col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="index.php" method="post">
+                        <input type="text" class="form-control form-control-dark" id="input" placeholder="Rechercher un quiz" aria-label="Search" name="query">
+                        <input type="submit" class="btn btn-outline-light me-2" value="Rechercher">
                     </form>
-                    <button type="button" class="btn btn-outline-light me-2">Rechercher</button>
+
                     <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
+                        <button type="button" class="btn btn-outline-light me-2">Login</button>
+                        <button type="button" class="btn btn-warning">Sign-up</button>
                     </div>
                 </div>
             </div>
         </header>
     </section>
-
+    <span> <?= var_dump(filterQuizs($_POST['query'])) ?></span>
     <section class="container list">
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                <td><h2>Titre du quiz</h2></td>
-                <td><h2>Illustration</h2></td>
-                <td><h2>Auteur</h2></td>
-                <td><h2>Nombre de questions</h2></td>
+                <?php
+                $j = 0;
+                foreach($quizs[0] as $key => $value){
+                    echo "<td><h2>$key</h2></td>";
+                }
+                ?>
             </tr>
             </thead>
             <tbody id="content">
@@ -66,16 +73,16 @@
             foreach($quizs as $quiz) {
                 echo "<tr>";
                     echo "<td>";
-                        echo "<a href='view.php?id=$i' class='list title'>$quiz[Title]</a>";
+                        echo "<p class='list-text'><a href='view.php?id=$i' >$quiz[Title]</a></p>";
                     echo "</td>";
                     echo "<td>";
                         echo "<img src='img/$i.jpg' class='quiz list-img'>";
                     echo "</td>";
                     echo "<td>";
-                        echo "<a>$quiz[Author]</a>";
+                        echo "<p class='list-text'><a>$quiz[Author]</a></p>";
                     echo "</td>";
                     echo "<td>";
-                        echo count($quiz['Questions']);
+                        echo "<p class='list-text'>" . count($quiz['Questions']) . "</p>";
                     echo "</td>";
                 echo "</tr>";
                 $i += 1;
